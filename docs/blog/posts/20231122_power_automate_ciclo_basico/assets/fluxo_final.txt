@@ -1,0 +1,27 @@
+flowchart TD
+    1((Inicio)) --> 2
+    2[Iniciar novo chrome] --> 3
+    3[Iniciar Excel] --> 4
+    4[Ler da planilha Excel o CNPJ fornecedor] -->5
+    5[Acessar página da Web]-->5.1
+    5.1[Aguardar página da Web carregar]-->6
+    6[Navegar para página de consulta fornecedores] --> 7
+    7[Aguardar página de consulta fornecedores carregar]-->8
+    8[Navegar para campo CNPJ do fornecedor] -->9
+    9[Digitar CNPJ do fornecedor] --> 10
+    10[Pesquisar] -->11
+    11[Aguardar resultado da pesquisa]-->12
+    12[Extrair dados da página da web / texto] --> 13
+    13[Analisar texto extraído com resposta]  -->14
+    14{Fornecedor Inscrito?}
+    14 -->|Não|15
+    14 -->|Sim|16
+    15[Gravar na planilha Excel Fornecedor NÃO inscrito] -->17
+    16[Gravar na planilha Excel Fornecedor inscrito] -->17
+    17{Consultar outro CNPJ?}
+    17-->|Sim|19
+    19[Salvar o Excel]-->4
+    17-->|Não|20
+    20[Fechar janela Chrome] -->21
+    21[Fechar e salvar Excel] -->22
+    22((Fim))

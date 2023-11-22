@@ -62,7 +62,7 @@ Ela cria uma instância do navegador Chrome, permitindo que o fluxo interaja com
 
 **Iniciar Excel**: Abre uma instância do Microsoft Excel, proporcionando a base para a manipulação eficiente de dados em planilhas.
 
-**Ler da Planilha Excel**: Com ela podemos extrair dados específicos de uma planilha, como os CNPJs que serão consultados no nosso exemplo. Essa ação simplifica a interação com dados em larga escala.
+**Ler da Planilha Excel**: Com ela podemos extrair dados específicos de uma planilha, como os CNPJs que serão consultados no nosso exemplo. Essa ação possibilita a interação com os dados existentes na instância Microsoft Excel desejada.
 
 ## Criação e utilização de variáveis[^3]
 
@@ -93,6 +93,42 @@ Podemos listar uma infinidade de exemplos, mas o importante será entender
 como essas variáveis são geradas e utilizadas.
 Como boa prática, sugerimos sempre renomear[^4] as variáveis criadas pelo próprio Automate, dando a elas nomes que contenham um significado claro em relação à informação armazenada.
 Isso facilitará a construção do fluxo, bem como sua manutenção.
+
+## Estruturas condicionais
+
+As estruturas condicionais do Automate são criadas utilizando-se as ações If e Else.
+Elas são semelhantes a divisões de um caminho, permitindo que o fluxo de automação tome decisões com base em condições específicas.
+
+```mermaid
+flowchart LR
+    1((Início)) --> 2
+    2[Penso em atravessar a rua] --> 3
+    3[Olho para os dois lados]  --> 4
+    4{Vejo algum carro?}
+    4-->|Sim|5
+    4-->|Não|6
+    5[Aguardo]-->7
+    6[Atravesso]-->7
+    7((Fim))
+```
+
+Como uma encruzilhada em uma estrada, as estruturas condicionais direcionam o fluxo do processo de acordo com critérios predefinidos.
+Por exemplo, iremos configurar uma estrutura condicional para verificar se CNPJ consultado está inscrito ou não no CAGEF.
+Se sim, o fluxo pode seguir para o registro da informação "Inscrito" em nossa planilha, enquanto se não, a informação registrada será "NÃO Inscrito".
+Essas estruturas proporcionam flexibilidade, assemelhando-se à capacidade de escolher diferentes caminhos em um trajeto, adaptando a automação conforme as circunstâncias.
+
+```mermaid
+flowchart TD
+    1((Início)) --> 2
+    2[Consulta CNPJ CAGEF] --> 3
+    3{CNPJ Inscrito}
+    3-->|Não|4
+    3-->|Sim|5
+    4[Escrever NÃO Inscrito na planilha Excel] --> 6
+    5[Escrever Inscrito na planilha Excel] --> 6
+    6((Fim))
+```
+
 
 [^1]: Carinhosamente chamado de Automate deste ponto em diante.
 [^2]: Não é nossa intenção aqui explicar todas as ações disponíveis, pois são muitas. Navegue nesta lista e tente, por conta própria, utilizar ações que te chamaram atenção, uma vez que suas configurações são, via de regra, bastante autoexplicativas.

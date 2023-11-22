@@ -98,11 +98,14 @@ Isso facilitará a construção do fluxo, bem como sua manutenção.
 
 As estruturas condicionais do Automate são criadas utilizando-se as ações If e Else.
 Elas são semelhantes a divisões de um caminho, permitindo que o fluxo de automação tome decisões com base em condições específicas.
+Estas condições direcionam o fluxo do processo de acordo com critérios predefinidos.
+Podemos usar o simples ato de atravessar a rua como exemplo.
+Antes de atravessar uma rua olhamos para os dois lados. Se (If) vejo algum carro vindo em algum dos lados aguardo e não atravesso. Caso contrário (Else), não havendo nenhum carro avistado, posso atravessar tranquilamente.
 
 ```mermaid
 flowchart LR
     1((Início)) --> 2
-    2[Penso em atravessar a rua] --> 3
+    2[Chego para atravessar a rua] --> 3
     3[Olho para os dois lados]  --> 4
     4{Vejo algum carro?}
     4-->|Sim|5
@@ -112,22 +115,62 @@ flowchart LR
     7((Fim))
 ```
 
-Como uma encruzilhada em uma estrada, as estruturas condicionais direcionam o fluxo do processo de acordo com critérios predefinidos.
-Por exemplo, iremos configurar uma estrutura condicional para verificar se CNPJ consultado está inscrito ou não no CAGEF.
-Se sim, o fluxo pode seguir para o registro da informação "Inscrito" em nossa planilha, enquanto se não, a informação registrada será "NÃO Inscrito".
-Essas estruturas proporcionam flexibilidade, assemelhando-se à capacidade de escolher diferentes caminhos em um trajeto, adaptando a automação conforme as circunstâncias.
+Em nosso caso iremos configurar uma estrutura condicional para verificar se CNPJ consultado está inscrito ou não no CAGEF.
+Se (If) sim, registro da informação "Inscrito" em nossa planilha, caso contrário (Else), a informação registrada será "NÃO Inscrito".
 
 ```mermaid
 flowchart TD
     1((Início)) --> 2
-    2[Consulta CNPJ CAGEF] --> 3
+    2[Consultar CNPJ CAGEF] --> 3
     3{CNPJ Inscrito}
     3-->|Não|4
     3-->|Sim|5
-    4[Escrever NÃO Inscrito na planilha Excel] --> 6
-    5[Escrever Inscrito na planilha Excel] --> 6
+    4[Escrever NÃO Inscrito no Excel] --> 6
+    5[Escrever Inscrito no Excel] --> 6
     6((Fim))
 ```
+
+Essas estruturas proporcionam flexibilidade, pois possibilitam a execução de multiplas possibilidades, adaptando a automação conforme as regras do negócio.
+
+## Estruturas de repetição (Loop)
+
+Como o próprio nome indica, são ações criadas com objetivo de repetir determinado processo.
+Melhorando nosso exemplo de atravessar a rua, devemos incluir um loop após a etapa aguardar, caso contrário aguardaremos eternamente ou não sairemos do lugar. Após um tempo aguardando, volto a olhar para os dois lados e o processo se repete até o momento que não vejo nenhum carro e posso atravessar a rua com segurança, finalizando o fluxo.
+
+```mermaid
+flowchart LR
+    1((Início)) --> 2
+    2[Chego para atravessar a rua] --> 3
+    3[Olho para os dois lados]  --> 4
+    4{Vejo algum carro?}
+    4-->|Sim|5
+    4-->|Não|6
+    5[Aguardo]-->3
+    6[Atravesso]-->7
+    7((Fim))
+```
+
+Para o Power Automate, **um loop permite que uma sequência de ações seja executada repetidamente** com base em condições específicas.
+É como uma máquina que faz a mesma tarefa várias vezes de forma automática, economizando tempo e esforço.
+
+Utilizaremos um loop em nossa lista de CNPJs afim de realizarmos todas as nossas consultas.
+Criaremos a lógica que permitirá ajustar, de maneira dinâmica, o número de repetições de acordo com o número de CNPJs existentes na lista.
+
+```mermaid
+flowchart TD
+    1((Início)) --> 2
+    2[Consultar CNPJ CAGEF] --> 3
+    3[Registrar resultado no Excel] --> 4
+    4{Todos CNPJs consultados?}
+    4-->|Sim|5
+    4-->|Não|2
+    5((Fim))
+```
+
+??? note "**Crie seu primeiro loop no Automate**"
+
+    ```mermaid
+            --8<-- "docs/blog/posts/20231122_power_automate_ciclo_basico/assets/fluxo_final.md"
 
 
 [^1]: Carinhosamente chamado de Automate deste ponto em diante.

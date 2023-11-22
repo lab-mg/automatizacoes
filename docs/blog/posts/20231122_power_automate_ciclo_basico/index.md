@@ -101,33 +101,43 @@ Elas são semelhantes a divisões de um caminho, permitindo que o fluxo de autom
 Estas condições direcionam o fluxo do processo de acordo com critérios predefinidos.
 Podemos usar o simples ato de atravessar a rua como exemplo.
 Antes de atravessar uma rua olhamos para os dois lados. Se (If) vejo algum carro vindo em algum dos lados aguardo e não atravesso. Caso contrário (Else), não havendo nenhum carro avistado, posso atravessar tranquilamente.
+Para ilustrar e ou facilitar o entendimento, a estrutura condicional foi destacada de laranja no fluxograma abaixo:
 
 ```mermaid
 flowchart LR
     1((Início)) --> 2
     2[Chego para atravessar a rua] --> 3
     3[Olho para os dois lados]  --> 4
+    4:::conditions
     4{Vejo algum carro?}
     4-->|Sim|5
     4-->|Não|6
-    5[Aguardo]-->7
-    6[Atravesso]-->7
+    5[Aguardo]
+    5:::conditions-->7
+    6[Atravesso]
+    6:::conditions-->7
     7((Fim))
+    classDef conditions fill:#f96
 ```
 
 Em nosso caso iremos configurar uma estrutura condicional para verificar se CNPJ consultado está inscrito ou não no CAGEF.
 Se (If) sim, registro da informação "Inscrito" em nossa planilha, caso contrário (Else), a informação registrada será "NÃO Inscrito".
+Para ilustrar e ou facilitar o entendimento, a estrutura condicional foi destacada de laranja no fluxograma abaixo:
 
 ```mermaid
 flowchart TD
     1((Início)) --> 2
     2[Consultar CNPJ CAGEF] --> 3
+    3:::conditions
     3{CNPJ Inscrito}
     3-->|Não|4
     3-->|Sim|5
+    4:::conditions
     4[Escrever NÃO Inscrito no Excel] --> 6
+    5:::conditions
     5[Escrever Inscrito no Excel] --> 6
     6((Fim))
+    classDef conditions fill:#f96
 ```
 
 Essas estruturas proporcionam flexibilidade, pois possibilitam a execução de multiplas possibilidades, adaptando a automação conforme as regras do negócio.
